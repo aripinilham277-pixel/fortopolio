@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Karya Anak Hebat!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'kids-blue': '#4FC3F7',
+                        'kids-yellow': '#FFF176',
+                        'kids-pink': '#FF8A65',
+                        'kids-green': '#81C784',
+                    },
+                    fontFamily: {
+                        'title': ['"Fredoka One"', 'cursive'],
+                        'body': ['"Nunito"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #E0F7FA;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .bounce-hover:hover {
+            transform: translateY(-10px) scale(1.05);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .float-anim {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-active {
+            background-color: #FF8A65;
+            color: white;
+            border-bottom: 4px solid #E64A19;
+        }
+        
+        .tab-inactive {
+            background-color: white;
+            color: #555;
+            border-bottom: 4px solid #ddd;
+        }
+
+        #modal-overlay {
+            backdrop-filter: blur(5px);
+            transition: opacity 0.3s ease;
+        }
+
+        /* Foto tidak terpotong */
+        .img-fit {
+            object-fit: contain;
+            background-color: #f0f0f0;
+            padding: 8px;
+        }
+        .card-img {
+            object-fit: contain;
+            background-color: #f5f5f5;
+            padding: 4px;
+        }
+    </style>
+</head>
+<body class="font-body text-gray-800 min-h-screen flex flex-col">
+
+    <header class="w-full bg-kids-yellow py-12 relative overflow-hidden border-b-8 border-yellow-400">
+        <div class="absolute top-4 left-4 text-4xl float-anim opacity-70">🎈</div>
+        <div class="absolute bottom-4 right-10 text-5xl float-anim opacity-70" style="animation-delay: 1s;">🌟</div>
+        <div class="absolute top-10 right-20 text-3xl float-anim opacity-70" style="animation-delay: 0.5s;">🚀</div>
+        
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-8 relative z-10">
+            <div class="w-32 h-32 md:w-48 md:h-48 rounded-full border-8 border-white overflow-hidden shadow-lg bounce-hover bg-white flex items-center justify-center cursor-pointer" onclick="filterKarya('saya')" title="Klik untuk lihat fotoku!">
+                <img src="img/20250810_133701.jpg" alt="Foto Profil Haidar" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+
+            <div class="text-center md:text-left">
+                <h1 class="font-title text-4xl md:text-6xl text-kids-pink drop-shadow-md mb-2">Halo! Aku Muhammad Haidar Al-Mahdi👦</h1>
+                
+                
+                <p class="text-xl md:text-2xl font-bold text-gray-700 bg-white inline-block px-4 py-2 rounded-full shadow-sm border-2 border-dashed border-kids-blue">
+                    tempat tgl/lahir  🦖
+                    Bogor 31 maret 2021
+                </p>
+
+                <div class="mt-3 flex flex-wrap gap-3 justify-center md:justify-start">
+                    <span class="bg-kids-blue text-white px-3 py-1 rounded-full text-sm font-bold shadow">umur ku sekarang : 6 Tahun</span>
+                    <span class="bg-kids-green text-white px-3 py-1 rounded-full text-sm font-bold shadow"></span>
+                    <span class="bg-white text-kids-pink px-3 py-1 rounded-full text-sm font-bold shadow border-2 border-dashed border-kids-pink">
+                        pa'ud: <span class="font-title">Al Qifahri</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Musik Latar (play/pause) -->
+    <div class="container mx-auto px-4 -mt-6 mb-8">
+        <div class="flex justify-center">
+            <div class="bg-white/80 backdrop-blur rounded-full border-4 border-kids-blue px-4 py-3 shadow-lg flex items-center gap-3">
+                <span class="text-2xl">🎵</span>
+                <button id="btn-music" type="button" onclick="toggleMusik()" class="font-title text-lg bg-kids-green text-white px-5 py-2 rounded-full shadow border-b-4 border-green-700 hover:translate-y-1 transition-all">
+                    Putar Musik
+                </button>
+                <span class="text-gray-600 text-sm hidden md:inline" id="music-status">(klik tombol)</span>
+                <audio id="bg-music" src="music/AUD-20190112-WA0010.mp3" preload="auto" loop></audio>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        
+        <div class="flex flex-wrap justify-center gap-4 mb-10">
+            <button onclick="filterKarya('ayah')" id="btn-ayah" class="tab-btn tab-active font-title text-xl px-6 py-3 rounded-t-xl rounded-bl-xl cursor-pointer hover:-translate-y-1 transition-transform">
+                👨 ayah
+            </button>
+            <button onclick="filterKarya('mamah')" id="btn-mamah" class="tab-btn tab-inactive font-title text-xl px-6 py-3 rounded-t-xl rounded-bl-xl cursor-pointer hover:-translate-y-1 transition-transform">
+                👩 mamah
+            </button>
+            <button onclick="filterKarya('kaka')" id="btn-kaka" class="tab-btn tab-inactive font-title text-xl px-6 py-3 rounded-t-xl rounded-bl-xl cursor-pointer hover:-translate-y-1 transition-transform">
+                👧 kaka
+            </button>
+            <button onclick="filterKarya('saya')" id="btn-saya" class="tab-btn tab-inactive font-title text-xl px-6 py-3 rounded-t-xl rounded-bl-xl cursor-pointer hover:-translate-y-1 transition-transform">
+                👦 saya
+            </button>
+            <button onclick="filterKarya('kebersamaan')" id="btn-kebersamaan" class="tab-btn tab-inactive font-title text-xl px-6 py-3 rounded-t-xl rounded-bl-xl cursor-pointer hover:-translate-y-1 transition-transform">
+                👨‍👩‍👧 foto kebersamaan ku
+            </button>
+            <button onclick="filterKarya('video')" id="btn-video" class="tab-btn tab-inactive font-title text-xl px-6 py-3 rounded-t-xl rounded-bl-xl cursor-pointer hover:-translate-y-1 transition-transform">
+                🎬 Video
+            </button>
+        </div>
+
+        <div id="galeri" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Item-item galeri akan dimuat dengan JavaScript -->
+        </div>
+
+        <section class="mt-16 bg-white rounded-3xl p-8 card-shadow border-4 border-kids-blue relative">
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-kids-blue text-white px-6 py-2 rounded-full font-title text-2xl shadow-md border-4 border-white">
+                Kirim Pesan Buat haidar 💌
+            </div>
+            
+            <form onsubmit="kirimPesan(event)" class="mt-6 flex flex-col gap-4 max-w-lg mx-auto">
+                <input type="text" id="namaPengirim" placeholder="Siapa namamu?" required
+                    class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-kids-pink focus:outline-none focus:ring-4 focus:ring-pink-100 text-lg transition-all">
+                
+                <textarea id="isiPesan" placeholder="Tulis sesuatu yang bagus ya! 😊" required rows="3"
+                    class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-kids-pink focus:outline-none focus:ring-4 focus:ring-pink-100 text-lg transition-all resize-none"></textarea>
+                
+                <button type="submit" 
+                    class="bg-kids-green hover:bg-green-500 text-white font-title text-xl py-3 px-8 rounded-full shadow-lg border-b-4 border-green-700 hover:translate-y-1 hover:border-b-0 transition-all self-center mt-2">
+                    Kirim Terbang! ✈️
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-6 mt-12 border-t-8 border-kids-blue">
+        <p class="font-title text-lg">Dibuat dengan ❤️ oleh Ayah & Ibu Haidar</p>
+        <p class="text-gray-400 text-sm mt-2">© 2026 Portofolio Anak</p>
+    </footer>
+
+    <div id="karya-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div id="modal-overlay" class="absolute inset-0 bg-gray-900 bg-opacity-60 cursor-pointer" onclick="tutupModal()"></div>
+        
+        <div class="relative bg-white rounded-3xl p-2 w-full max-w-2xl mx-auto shadow-2xl transform transition-transform scale-95" id="modal-content">
+            <button onclick="tutupModal()" class="absolute -top-4 -right-4 bg-red-500 text-white w-12 h-12 rounded-full font-title text-2xl border-4 border-white shadow-lg hover:bg-red-600 z-10 flex items-center justify-center">
+                X
+            </button>
+            
+            <div class="bg-yellow-50 rounded-2xl p-6 border-4 border-dashed border-kids-yellow">
+                <div id="modal-image-container" class="w-full h-64 sm:h-80 bg-gray-200 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                    <svg id="modal-img" class="w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"></svg>
+                </div>
+                
+                <h3 id="modal-title" class="font-title text-3xl text-kids-blue mb-2">Judul</h3>
+                <p id="modal-desc" class="text-gray-600 text-lg">Deskripsi</p>
+                
+                <div class="mt-4 flex items-center gap-2">
+                    <span class="text-2xl">❤️</span>
+                    <span class="font-bold text-gray-700">Dibuat pada: <span id="modal-date" class="font-normal text-kids-pink">Januari 2026</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notifikasi" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-white px-8 py-4 rounded-full shadow-2xl border-4 border-kids-green z-50 hidden items-center gap-3 transition-transform translate-y-[-100px]">
+        <span class="text-3xl">🎉</span>
+        <span class="font-title text-xl text-kids-green">Pesan berhasil dikirim!</span>
+    </div>
+
+    <script>
+        // ===== DATA KARYA & FOTO =====
+        const dataKarya = [
+            // ===== AYAH (3 foto) =====
+            {
+                id: 1,
+                judul: "Ayah Tercinta",
+                kategori: "ayah",
+                deskripsi: "Ayahku yang paling hebat!",
+                tanggal: "November 2025",
+                warnaBg: "#E3F2FD",
+                icon: "👨",
+                image: "img/FB_IMG_1735043091910.jpg"
+            },
+            {
+                id: 2,
+                judul: "Ayah Hebat",
+                kategori: "ayah",
+                deskripsi: "Ayah selalu ada untukku.",
+                tanggal: "November 2025",
+                warnaBg: "#FFF3E0",
+                icon: "👨",
+                image: "img/af3dcb36b6194b8d9bff3136198b35ee.png"
+            },
+            {
+                id: 3,
+                judul: "Ayah Seorang Juru Masak",
+                kategori: "ayah",
+                deskripsi: "Ayah jago masak!",
+                tanggal: "November 2025",
+                warnaBg: "#E8F5E9",
+                icon: "👨",
+                image: "img/Generated Image September 30, 2025 - 8_13PM.png"
+            },
+            // ===== MAMAH (10 foto) =====
+            {
+                id: 4,
+                judul: "Mamah Tercinta",
+                kategori: "mamah",
+                deskripsi: "Mamah yang selalu menyayangi Haidar.",
+                tanggal: "September 2025",
+                warnaBg: "#FCE4EC",
+                icon: "👩",
+                image: "img/Screenshot_20250803_082221_TikTok.jpg"
+            },
+            {
+                id: 5,
+                judul: "Mamah Hebat",
+                kategori: "mamah",
+                deskripsi: "Terima kasih Mamah atas segalanya!",
+                tanggal: "September 2025",
+                warnaBg: "#FFF8E1",
+                icon: "👩",
+                image: "img/20250712_154443.jpg"
+            },
+            {
+                id: 6,
+                judul: "Bidadariku Mamah",
+                kategori: "mamah",
+                deskripsi: "Mamah adalah bidadari di hidup Haidar.",
+                tanggal: "September 2025",
+                warnaBg: "#E8EAF6",
+                icon: "👩",
+                image: "img/20250718_124014.jpg"
+            },
+            {
+                id: 7,
+                judul: "Mamah Cantik",
+                kategori: "mamah",
+                deskripsi: "Mamah yang paling cantik sedunia!",
+                tanggal: "September 2025",
+                warnaBg: "#F3E5F5",
+                icon: "👩",
+                image: "img/20250815_125106.jpg"
+            },
+            {
+                id: 8,
+                judul: "Mamah",
+                kategori: "mamah",
+                deskripsi: "Foto Mamah yang cantik!",
+                tanggal: "Juli 2025",
+                warnaBg: "#E8F5E9",
+                icon: "👩",
+                image: "mamah/20250718_124014.jpg"
+            },
+            {
+                id: 9,
+                judul: "Mamah Tersayang",
+                kategori: "mamah",
+                deskripsi: "Mamah tercinta selamanya.",
+                tanggal: "Juli 2025",
+                warnaBg: "#FFF8E1",
+                icon: "👩",
+                image: "mamah/20250727_164700.jpg"
+            },
+            {
+                id: 10,
+                judul: "Mamah",
+                kategori: "mamah",
+                deskripsi: "Mamah tersayang.",
+                tanggal: "Juli 2025",
+                warnaBg: "#E8F5E9",
+                icon: "👩",
+                image: "mamah/20250712_145030.jpg"
+            },
+            {
+                id: 11,
+                judul: "Mamah",
+                kategori: "mamah",
+                deskripsi: "Mamahku tersayang.",
+                tanggal: "Juli 2025",
+                warnaBg: "#FFF3E0",
+                icon: "👩",
+                image: "mamah/20250712_154443.jpg"
+            },
+            {
+                id: 12,
+                judul: "Mamah",
+                kategori: "mamah",
+                deskripsi: "Mamah yang cantik.",
+                tanggal: "Agustus 2025",
+                warnaBg: "#FCE4EC",
+                icon: "👩",
+                image: "mamah/Screenshot_20250803_082221_TikTok.jpg"
+            },
+            {
+                id: 13,
+                judul: "Mamah",
+                kategori: "mamah",
+                deskripsi: "Mamah tersayang.",
+                tanggal: "Agustus 2025",
+                warnaBg: "#FFF8E1",
+                icon: "👩",
+                image: "mamah/20250821_125213.jpg"
+            },
+            // ===== KAKA (2 foto) =====
+            {
+                id: 14,
+                judul: "Kakakku Tersayang",
+                kategori: "kaka",
+                deskripsi: "Foto kakak ku yang cantik dan baik hati!",
+                tanggal: "September 2025",
+                warnaBg: "#F3E5F5",
+                icon: "👧",
+                image: "img/9d012e8b813b7c2ba1abefcc66ac51bf_1733057497148_0.webp.jpg"
+            },
+            {
+                id: 15,
+                judul: "Kakak Hebat",
+                kategori: "kaka",
+                deskripsi: "Kakak selalu jadi panutan untuk Haidar.",
+                tanggal: "September 2025",
+                warnaBg: "#E1F5FE",
+                icon: "👧",
+                image: "img/78f9a42cf4dd633ae39feb148d7c559b_1733057690218_0.webp.jpg"
+            },
+            // ===== FOTO SAYA / HAIDAR (9 foto) =====
+            {
+                id: 16,
+                judul: "Ini Foto Ku - Haidar",
+                kategori: "saya",
+                deskripsi: "Hai! Ini aku Haidar, anak hebat!",
+                tanggal: "Agustus 2025",
+                warnaBg: "#E3F2FD",
+                icon: "👦",
+                image: "img/20250810_133609.jpg"
+            },
+            {
+                id: 17,
+                judul: "Haidar Tersenyum",
+                kategori: "saya",
+                deskripsi: "Senyumku yang paling ceria!",
+                tanggal: "Agustus 2025",
+                warnaBg: "#E8F5E9",
+                icon: "👦",
+                image: "img/20250810_133701.jpg"
+            },
+            {
+                id: 18,
+                judul: "Haidar Main",
+                kategori: "saya",
+                deskripsi: "Sedang asyik bermain dan belajar.",
+                tanggal: "Agustus 2025",
+                warnaBg: "#FFF3E0",
+                icon: "👦",
+                image: "img/20250810_145259.jpg"
+            },
+            {
+                id: 19,
+                judul: "Ini Foto waktu bermain basket ball",
+                kategori: "saya",
+                deskripsi: "Asyik main basket!",
+                tanggal: "Agustus 2025",
+                warnaBg: "#E3F2FD",
+                icon: "👦",
+                image: "img/Generated Image September 21, 2025 - 2_00PM.png"
+            },
+            {
+                id: 20,
+                judul: "Ini gaya casual ku",
+                kategori: "saya",
+                deskripsi: "Gaya santai sehari-hari.",
+                tanggal: "Agustus 2025",
+                warnaBg: "#FFF8E1",
+                icon: "👦",
+                image: "img/20250712_145030.jpg"
+            },
+            {
+                id: 21,
+                judul: "Ini sama bunda",
+                kategori: "saya",
+                deskripsi: "Momen bersama bunda tersayang.",
+                tanggal: "Agustus 2025",
+                warnaBg: "#FCE4EC",
+                icon: "👦",
+                image: "img/20250810_145259.jpg"
+            },
+            {
+                id: 22,
+                judul: "Ini saudara saudara ku",
+                kategori: "saya",
+                deskripsi: "Bersama saudara-saudaraku.",
+                tanggal: "Agustus 2025",
+                warnaBg: "#E8F5E9",
+                icon: "👦",
+                image: "img/20250810_133701.jpg"
+            },
+            {
+                id: 23,
+                judul: "Waktu di asrama kaka ku",
+                kategori: "saya",
+                deskripsi: "Semoga teteh dapat ilmu yang bermanfaat!",
+                tanggal: "Agustus 2025",
+                warnaBg: "#FFF3E0",
+                icon: "👦",
+                image: "img/20250810_133701.jpg"
+            },
+            // ===== FOTO KEBERSAMAAN (3 foto) =====
+            {
+                id: 24,
+                judul: "Foto Berempat",
+                kategori: "kebersamaan",
+                deskripsi: "Momen kebersamaan ayah, ibu, kaka, dan Haidar.",
+                tanggal: "April 2026",
+                warnaBg: "#E8F5E9",
+                icon: "👨‍👩‍👧",
+                image: "img/20260413_114716.jpg"
+            },
+            {
+                id: 25,
+                judul: "Keluarga Tercinta",
+                kategori: "kebersamaan",
+                deskripsi: "Foto keluarga kita yang paling berharga!",
+                tanggal: "April 2025",
+                warnaBg: "#FFF3E0",
+                icon: "👨‍👩‍👧",
+                image: "img/20250403_112552.jpg"
+            },
+            {
+                id: 26,
+                judul: "Foto Bersama Keluarga",
+                kategori: "kebersamaan",
+                deskripsi: "Kebersamaan dengan keluarga tercinta.",
+                tanggal: "Agustus 2025",
+                warnaBg: "#E3F2FD",
+                icon: "👨‍👩‍👧",
+                image: "img/20250712_154443.jpg"
+            },
+            // ===== VIDEO =====
+            {
+                id: 27,
+                judul: "Video Haidar",
+                kategori: "video",
+                deskripsi: "Video seru dari Haidar!",
+                tanggal: "April 2026",
+                warnaBg: "#E8F5E9",
+                icon: "🎬",
+                video: "video/lv_7598529253222649105_20260409082933.mp4"
+            }
+        ];
+
+        const galeriContainer = document.getElementById('galeri');
+
+        function renderKartu(karya) {
+            let mediaContent = '';
+            if (karya.video) {
+                mediaContent = `
+                    <video class="w-full h-full object-contain bg-gray-100" muted loop
+                        onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+                        <source src="${karya.video}" type="video/mp4">
+                    </video>`;
+            } else if (karya.image) {
+                mediaContent = `<img src="${karya.image}" alt="${karya.judul}" class="w-full h-full card-img" loading="lazy" />`;
+            } else {
+                mediaContent = `<div class="flex items-center justify-center w-full h-full bg-gray-200 text-6xl">${karya.icon}</div>`;
+            }
+
+            return `
+                <div class="bg-white rounded-3xl overflow-hidden card-shadow bounce-hover border-4 border-transparent hover:border-kids-blue transition-colors cursor-pointer group"
+                     onclick="bukaModal(${karya.id})">
+                    <div class="h-48 relative overflow-hidden flex items-center justify-center bg-gray-100">
+                        ${mediaContent}
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all flex items-center justify-center">
+                            <span class="text-5xl opacity-0 group-hover:opacity-100 transform scale-50 group-hover:scale-100 transition-all duration-300">
+                                🔍
+                            </span>
+                        </div>
+                        <div class="absolute top-2 right-2 text-3xl bg-white rounded-full p-2 shadow-sm">
+                            ${karya.icon}
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold mb-2 uppercase tracking-wide">
+                            ${karya.kategori}
+                        </span>
+                        <h3 class="font-title text-2xl text-gray-800 mb-2 truncate">${karya.judul}</h3>
+                        <p class="text-gray-600 line-clamp-2 text-sm">${karya.deskripsi}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function muatGaleri(filter = 'semua') {
+            galeriContainer.innerHTML = '';
+            
+            const karyaDifilter = filter === 'semua' 
+                ? dataKarya 
+                : dataKarya.filter(k => k.kategori === filter);
+
+            if (karyaDifilter.length === 0) {
+                galeriContainer.innerHTML = `<div class="col-span-full text-center py-10 font-title text-2xl text-gray-400">Belum ada di sini 😢</div>`;
+                return;
+            }
+
+            karyaDifilter.forEach((karya, index) => {
+                setTimeout(() => {
+                    galeriContainer.innerHTML += renderKartu(karya);
+                }, index * 100);
+            });
+        }
+
+        function filterKarya(kategori) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => {
+                tab.classList.remove('tab-active');
+                tab.classList.add('tab-inactive');
+            });
+            
+            const btnTarget = document.getElementById(`btn-${kategori}`);
+            if (btnTarget) {
+                btnTarget.classList.remove('tab-inactive');
+                btnTarget.classList.add('tab-active');
+            }
+
+            muatGaleri(kategori);
+        }
+
+        const modal = document.getElementById('karya-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        function bukaModal(id) {
+            const karya = dataKarya.find(k => k.id === id);
+            if (!karya) return;
+
+            document.getElementById('modal-title').innerText = karya.judul;
+            document.getElementById('modal-desc').innerText = karya.deskripsi;
+            document.getElementById('modal-date').innerText = karya.tanggal;
+            
+            const modalImgContainer = document.getElementById('modal-image-container');
+
+            if (karya.video) {
+                modalImgContainer.innerHTML = `
+                    <video class="w-full h-full object-contain bg-gray-100" controls autoplay>
+                        <source src="${karya.video}" type="video/mp4">
+                    </video>`;
+            } else if (karya.image) {
+                modalImgContainer.innerHTML = `<img src="${karya.image}" alt="${karya.judul}" class="w-full h-full img-fit" />`;
+            } else {
+                modalImgContainer.innerHTML = `<div class="flex items-center justify-center w-full h-full text-8xl">${karya.icon}</div>`;
+            }
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function tutupModal() {
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        function kirimPesan(event) {
+            event.preventDefault();
+            const nama = document.getElementById('namaPengirim').value;
+            event.target.reset();
+            tampilkanNotifikasi(`Terima kasih ${nama}! Pesanmu sudah terbang ke Haidar 🚀`);
+        }
+
+        function tampilkanNotifikasi(pesan) {
+            const notif = document.getElementById('notifikasi');
+            notif.querySelector('span:nth-child(2)').innerText = pesan;
+            notif.classList.remove('hidden');
+            setTimeout(() => {
+                notif.style.transform = 'translate(-50%, 0)';
+            }, 10);
+            setTimeout(() => {
+                notif.style.transform = 'translate(-50%, -150px)';
+                setTimeout(() => {
+                    notif.classList.add('hidden');
+                }, 300);
+            }, 3000);
+        }
+
+        function toggleMusik() {
+            const audio = document.getElementById('bg-music');
+            const status = document.getElementById('music-status');
+            const btn = document.getElementById('btn-music');
+            
+            if (!audio) return;
+
+            if (audio.paused) {
+                audio.play().then(() => {
+                    if (status) status.innerText = 'Sedang diputar...';
+                    if (btn) btn.innerText = 'Pause Musik';
+                }).catch(() => {
+                    if (status) status.innerText = 'Klik lagi untuk memutar (izin browser belum ada).';
+                });
+            } else {
+                audio.pause();
+                if (status) status.innerText = '(musik dipause)';
+                if (btn) btn.innerText = 'Putar Musik';
+            }
+        }
+
+        window.onload = () => {
+            muatGaleri();
+        };
+    </script>
+</body>
+</html>
